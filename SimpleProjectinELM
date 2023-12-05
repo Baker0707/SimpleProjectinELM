@@ -1,0 +1,62 @@
+module Counter exposing (main)
+
+import Html exposing (Html, button, div, text)
+import Html.Events exposing (onClick)
+
+
+-- Model
+type alias Model =
+    { count : Int }
+
+
+initialModel : Model
+initialModel =
+    { count = 0 }
+
+
+-- Update
+type Msg
+    = Increment
+    | Decrement
+
+update : Msg -> Model -> Model
+update msg model =
+    case msg of
+        Increment ->
+            { model | count = model.count + 1 }
+
+        Decrement ->
+            { model | count = model.count - 1 }
+
+
+-- View
+view : Model -> Html Msg
+view model =
+    div []
+        [ button [ onClick Decrement ] [ text "-" ]
+        , div [] [ text (String.fromInt model.count) ]
+        , button [ onClick Increment ] [ text "+" ]
+        ]
+
+
+-- Main
+main : Html Msg
+main =
+    view initialModel
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Elm Counter Example</title>
+    <script src="counter.js"></script>
+</head>
+<body>
+    <div id="elm-container"></div>
+    <script>
+        var app = Elm.Counter.init({
+            node: document.getElementById('elm-container')
+        });
+    </script>
+</body>
+</html>
